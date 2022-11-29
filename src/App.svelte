@@ -1,23 +1,11 @@
 <script>
-  import Example from "./lib/Example.svelte";
-  import data from "./data/data.json";
+  import Example from './lib/Example.svelte';
+  import data from './data/data.json';
   console.log(data);
 </script>
 
 <main>
-  <h1>Let's make a chart 😎</h1>
-  <h2>
-    Get started by deleting all of the contents in <pre>App.svelte</pre>
-    🗑
-  </h2>
   <Example />
-  <footer>
-    For help, <a
-      href="https://twitter.com/CL_Rothschild"
-      target="_blank"
-      rel="noopener noreferrer">DM Connor on Twitter ✉️</a
-    >
-  </footer>
 </main>
 
 <style>
