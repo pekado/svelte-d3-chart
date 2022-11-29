@@ -3,7 +3,7 @@
   export let width;
 </script>
 
-{#each yScale.ticks() as tick}
+{#each yScale.ticks(5) as tick}
   <text
     y={yScale(tick)}
     x={0}

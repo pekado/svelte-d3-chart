@@ -5,7 +5,7 @@
   export let color;
 
   import {line} from 'd3-shape';
-  const lineGenerator = line()
+  $: lineGenerator = line()
     .x((d) => xScale(new Date(d.date)))
     .y((d) => yScale(d.winprob));
 </script>

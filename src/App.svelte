@@ -1,53 +1,39 @@
 <script>
-  import Example from './lib/Example.svelte';
   import data from './data/data.json';
+  import Line from './lib/Line.svelte';
   console.log(data);
+  import {scaleLinear, scaleTime} from 'd3-scale';
+  import AxisX from './lib/axisX.svelte';
+  import AxisY from './lib/axisY.svelte';
+  const margin = {
+    top: 30,
+    right: 50,
+    bottom: 30,
+    left: 50,
+  };
+  let height = 400;
+  let width = 450;
+
+  const minDate = new Date(data.Biden[0].date);
+  const maxDate = new Date(data.Biden[data.Biden.length - 1].date);
+
+  let innerHeight = height - margin.top - margin.bottom;
+  $: innerWidth = width - margin.left - margin.right;
+  $: xScale = scaleTime()
+    .domain([minDate, maxDate]) // INPUT
+    .range([0, innerWidth]); // OUTPUT
+  const yScale = scaleLinear()
+    .domain([0, 100]) // INPUT
+    .range([innerHeight, 0]); // OUTPUT
 </script>
 
-<main>
-  <Example />
-</main>
-
-<style>
-  main {
-    text-align: center;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background: #f0f0f0;
-  }
-
-  h1 {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    font-weight: 700;
-  }
-
-  h2 {
-    font-size: 1.5rem;
-    color: #333;
-    margin-bottom: 2rem;
-    line-height: 1.5;
-  }
-
-  pre {
-    padding: 1px 6px;
-    display: inline;
-    margin: 0;
-    background: #ffb7a0;
-    border-radius: 3px;
-  }
-
-  a {
-    color: #ff3e00;
-    text-decoration: inherit;
-  }
-
-  footer {
-    font-size: 1rem;
-    color: #333;
-  }
-</style>
+<div bind:clientWidth={width}>
+  <svg {width} {height}>
+    <g transform={`translate(${margin.left}, ${margin.top})`}>
+      <Line {xScale} {yScale} data={data.Biden} color="blue" />
+      <Line {xScale} {yScale} data={data.Trump} color="red" />
+      <AxisX {xScale} height={innerHeight} />
+      <AxisY {yScale} width={innerWidth} />
+    </g></svg
+  >
+</div>
